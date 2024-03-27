@@ -148,7 +148,7 @@ reset.addEventListener("click", () => {
     computerWins = 0;
     playerWins = 0;
     score.innerText = "Start the game!";
-})
+});
 
 
 
