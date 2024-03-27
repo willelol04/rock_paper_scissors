@@ -21,91 +21,134 @@ function getComputerChoice() {
 
 
 function playGame(playerSelection, computerSelection) {
+    let output = "";
 
-    console.log("player chose", playerSelection.toLowerCase());
-    console.log("computer chose", computerSelection);
+    output += ("player chose " + playerSelection);
+    output += ("\ncomputer chose " + computerSelection + "\n");
 
-    switch (playerSelection.toLowerCase()) {
+
+    switch (playerSelection) {
         case "rock":
             if(computerSelection == "scissors") {
-                return("Player wins!");
+                output += ("Player wins!");
+                playerWins ++;
+
             
             }
             else if (computerSelection == "paper") {
-                return("Computer wins!");
+                output+= ("Computer wins!");
+                computerWins++;
+
             }
             else {
-                return("It's a tie");
+                output += ("It's a tie");
+                ties++;
+
             }
             break;
+
 
         case "scissors":
             if(computerSelection == "paper") {
-                return("Player wins!");
-            
+                output += ("Player wins!");
+                playerWins ++;
+
             }
-            else if (computerSelection == "paper") {
-                return("Computer wins!");
+            else if (computerSelection == "rock") {
+                output += ("Computer wins!");
+                computerWins++;
+
+
             }
             else {
-                return("It's a tie");
+                output += ("It's a tie");
+                ties++;
             }
             break;
+
 
         default:
             if(computerSelection == "rock") {
-                return("Player wins!");
+                output += ("Player wins!");
+                playerWins ++;
+
+
             
             }
             else if (computerSelection == "scissors") {
-                return("Computer wins!");
+                output += ("Computer wins!");
+                computerWins++;
+
+
             }
             else {
-                return("It's a tie");
+                output += ("It's a tie");
+                ties++;
+                
             }
             break;
 
+
+
         
-            
+
     
         
         
 
     }
+    return(output);
+
 
 }
+let gameInd = 0;
+let playerWins = 0;
+let computerWins = 0;
+let ties = 0;
 
 
+function playGames(playerSelection, computerSelection) {
+    output = "";
 
-function playGames() {
-    gameInd = 1;
-    playerWins = 0;
-    computerWins = 0;
 
-    while(gameInd <= 5) {
-        console.log("Game #", gameInd);
-        game = playGame(getPlayerMove(), getComputerChoice());
-        console.log(game);
-
-        if(game == "Computer wins!") {
-            computerWins++;
-        }
-        if(game == "Player wins!") {
-            playerWins++;
-        }
-        
+    if(playerWins < 5 && computerWins < 5) {
         gameInd ++;
+        output += ("Game #" + gameInd);
+        game = playGame(playerSelection, computerSelection);
+        output += "\n" + game;
+        output += ("\n-------------------------\n" + "Player wins:" + playerWins + "\nComputer wins:" + computerWins + "\nTies: " + ties);
 
     }
+    
 
-    console.log("-------------------------\n", "Player wins:", playerWins, "\nComputer wins:", computerWins);
+    if(playerWins == 5) {
+        output = ("Player won: " + playerWins + " - " + computerWins);
 
+    }
+    if(computerWins == 5) {
+        return("Computer won: " + playerWins + " - " + computerWins);
+
+    }
+    return(output);
 }
 
-function getPlayerMove() {
-    return prompt("rock, paper or scissors?");
-}
 
 
-playGames();
+btns = document.querySelectorAll(".button");
+score = document.querySelector(".score");
+score.innerText = "Start the game!";
+
+reset = document.querySelector(".reset")
+
+btns.forEach((element) => element.addEventListener("click", () => score.innerText = (playGames(element.innerText, getComputerChoice()))));
+
+reset.addEventListener("click", () => {
+    ties = 0;
+    gameInd = 0;
+    computerWins = 0;
+    playerWins = 0;
+    score.innerText = "Start the game!";
+})
+
+
 
